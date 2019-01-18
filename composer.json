@@ -1,0 +1,21 @@
+{
+  "name": "circli/event-dispatcher",
+  "description": "",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Andreas Sundqvist",
+      "email": "andreas@oak-valley.se"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+  },
+  "autoload": {
+    "psr-4": {
+      "Circli\\EventManager\\": "src/"
+    }
+  }
+}
