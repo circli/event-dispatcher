@@ -1,6 +1,6 @@
 <?php
 
-namespace Circli\EventManager;
+namespace Circli\EventDispatcher;
 
 class NullEventDispatcher implements EventDispatcherInterface
 {

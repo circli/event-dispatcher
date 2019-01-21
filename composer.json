@@ -15,7 +15,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Circli\\EventManager\\": "src/"
+      "Circli\\EventDispatcher\\": "src/"
     }
   }
 }
