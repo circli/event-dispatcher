@@ -9,8 +9,8 @@ interface EventDispatcherAwareInterface
      *
      * @return static
      */
-    public function setEventManager(EventDispatcherInterface $eventManager);
+    public function setEventDispatcher(EventDispatcherInterface $eventManager);
 
-    public function getEventManager(): EventDispatcherInterface;
+    public function getEventDispatcher(): EventDispatcherInterface;
 
 }

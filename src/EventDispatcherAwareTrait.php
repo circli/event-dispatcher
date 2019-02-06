@@ -7,13 +7,13 @@ trait EventDispatcherAwareTrait
     /** @var EventDispatcherInterface */
     private $eventManager;
 
-    public function setEventManager(EventDispatcherInterface $eventManager)
+    public function setEventDispatcher(EventDispatcherInterface $eventManager)
     {
         $this->eventManager = $eventManager;
         return $this;
     }
 
-    public function getEventManager(): EventDispatcherInterface
+    public function getEventDispatcher(): EventDispatcherInterface
     {
         if ($this->eventManager === null) {
             $this->eventManager = new NullEventDispatcher();
