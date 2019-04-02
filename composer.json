@@ -1,6 +1,11 @@
 {
   "name": "circli/event-dispatcher",
-  "description": "",
+  "description": "PSR-14 event dispatcher implementation.",
+  "keywords": [
+    "Circli",
+    "PSR-14",
+    "Events"
+  ],
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -9,9 +14,12 @@
       "email": "andreas@oak-valley.se"
     }
   ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
+  "provide": {
+    "psr/event-dispatcher-implementation": "^1.0"
+  },
   "require": {
+    "psr/event-dispatcher": "^1.0",
+    "psr/container": "^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^8"
