@@ -2,6 +2,8 @@
 
 namespace Circli\EventDispatcher;
 
+use Psr\EventDispatcher\EventDispatcherInterface;
+
 interface EventDispatcherAwareInterface
 {
     /**
@@ -12,5 +14,4 @@ interface EventDispatcherAwareInterface
     public function setEventDispatcher(EventDispatcherInterface $eventManager);
 
     public function getEventDispatcher(): EventDispatcherInterface;
-
 }

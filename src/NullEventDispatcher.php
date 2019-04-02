@@ -2,26 +2,21 @@
 
 namespace Circli\EventDispatcher;
 
+use Psr\EventDispatcher\EventDispatcherInterface;
+
 class NullEventDispatcher implements EventDispatcherInterface
 {
     /**
-     * @param string $eventType
-     * @param callable $callback
+     * Provide all relevant listeners with an event to process.
      *
-     * @return static
-     */
-    public function listen(string $eventType, callable $callback)
-    {
-        return $this;
-    }
-
-    /**
-     * @param mixed $event
+     * @param object $event
+     *   The object to process.
      *
-     * @return static
+     * @return object
+     *   The Event that was passed, now modified by listeners.
      */
-    public function trigger($event)
+    public function dispatch(object $event)
     {
-        return $this;
+        return $event;
     }
 }

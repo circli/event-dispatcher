@@ -2,22 +2,24 @@
 
 namespace Circli\EventDispatcher;
 
+use Psr\EventDispatcher\EventDispatcherInterface;
+
 trait EventDispatcherAwareTrait
 {
     /** @var EventDispatcherInterface */
-    private $eventManager;
+    private $eventDispatcher;
 
     public function setEventDispatcher(EventDispatcherInterface $eventManager)
     {
-        $this->eventManager = $eventManager;
+        $this->eventDispatcher = $eventManager;
         return $this;
     }
 
     public function getEventDispatcher(): EventDispatcherInterface
     {
-        if ($this->eventManager === null) {
-            $this->eventManager = new NullEventDispatcher();
+        if ($this->eventDispatcher === null) {
+            $this->eventDispatcher = new NullEventDispatcher();
         }
-        return $this->eventManager;
+        return $this->eventDispatcher;
     }
 }

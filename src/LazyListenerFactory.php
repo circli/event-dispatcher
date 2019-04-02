@@ -2,23 +2,26 @@
 
 namespace Circli\EventDispatcher;
 
+use Psr\Container\ContainerInterface;
+
 class LazyListenerFactory
 {
-    /** @var ListenerResolverInterface */
-    private $resolver;
+    /** @var ContainerInterface */
+    private $container;
 
-    public function __construct(ListenerResolverInterface $resolver)
+    public function __construct(ContainerInterface $container)
     {
-        $this->resolver = $resolver;
+        $this->container = $container;
     }
 
     public function lazy($listener): callable
     {
         return function ($event) use ($listener) {
-            $callback = $this->resolver->resolve($listener);
-            if (\is_callable($callback)) {
-                $callback($event);
+            $callback = $this->container->get($listener);
+            if (!\is_callable($callback)) {
+                throw new \InvalidArgumentException('Listener not a valid service callback');
             }
+            $callback($event);
         };
     }
 }

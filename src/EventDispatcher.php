@@ -2,38 +2,44 @@
 
 namespace Circli\EventDispatcher;
 
-class EventDispatcher implements EventDispatcherInterface
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\ListenerProviderInterface;
+use Psr\EventDispatcher\StoppableEventInterface;
+
+final class EventDispatcher implements EventDispatcherInterface
 {
-    /** @var array<string, callable> */
-    private $events = [];
+    /** @var ListenerProviderInterface */
+    private $provider;
+
+    public function __construct(ListenerProviderInterface $provider)
+    {
+        $this->provider = $provider;
+    }
 
     /**
-     * @param string $eventType the class name of the event
-     * @param callable callback
-     * @return static
+     * Provide all relevant listeners with an event to process.
+     *
+     * @param object $event
+     *   The object to process.
+     *
+     * @return object
+     *   The Event that was passed, now modified by listeners.
      */
-    public function listen(string $eventType, callable $callback)
+    public function dispatch(object $event)
     {
-        if (!isset($this->events[$eventType])) {
-            $this->events[$eventType] = [];
+        $stoppable = $event instanceof StoppableEventInterface;
+        if ($stoppable && $event->isPropagationStopped()) {
+            return $event;
         }
-        $this->events[$eventType][] = $callback;
-        return $this;
-    }
 
-    public function trigger($event)
-    {
-        foreach ($this->getEvents(\get_class($event)) as $callback) {
-            $callback($event);
-        }
-        return $this;
-    }
+        foreach ($this->provider->getListenersForEvent($event) as $listener) {
+            $listener($event);
 
-    public function getEvents(string $eventType): array
-    {
-        if (isset($this->events[$eventType])) {
-            return $this->events[$eventType];
+            if ($stoppable && $event->isPropagationStopped()) {
+                break;
+            }
         }
-        return [];
+
+        return $event;
     }
 }

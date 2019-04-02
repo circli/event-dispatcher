@@ -3,29 +3,106 @@
 namespace Tests;
 
 use Circli\EventDispatcher\EventDispatcher;
+use http\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\EventDispatcher\ListenerProviderInterface;
+use Psr\EventDispatcher\StoppableEventInterface;
 use Tests\Stubs\TestEvent;
 
 class EventDispatcherTest extends TestCase
 {
-    public function testsListen(): void
+    public function testDispatchToAllRelevantListeners(): void
     {
-        $dispatcher = new EventDispatcher();
-        $dispatcher->listen(TestEvent::class, function (TestEvent $event) {
-            $this->assertSame(1, $event->getCount());
-        });
+        $spy = (object) ['caught' => 0];
+        $listeners = [];
+        for ($i = 0; $i < 5; $i += 1) {
+            $listeners[] = function (object $event) use ($spy) {
+                $spy->caught += 1;
+            };
+        }
+        $event = new TestEvent();
 
-        $dispatcher->trigger(new TestEvent());
+        $listener = $this->createMock(ListenerProviderInterface::class);
+        $listener
+            ->expects($this->once())
+            ->method('getListenersForEvent')
+            ->with($event)
+            ->willReturn($listeners);
+
+        $dispatcher = new EventDispatcher($listener);
+        $this->assertSame($event, $dispatcher->dispatch($event));
+        $this->assertSame(5, $spy->caught);
     }
 
-    public function testsGetEvents(): void
+    public function testStopsOnException(): void
     {
-        $dispatcher = new EventDispatcher();
-        $dispatcher->listen(TestEvent::class, function () {});
-        $dispatcher->listen(TestEvent::class, function () {});
+        $event = new TestEvent();
+        $exception = new \RuntimeException();
+        $listeners = [];
+        $listeners[] = function (object $event) use ($exception) {
+            throw $exception;
+        };
 
-        $this->assertCount(2, $dispatcher->getEvents(TestEvent::class));
+        $listener = $this->createMock(ListenerProviderInterface::class);
+        $listener
+            ->expects($this->once())
+            ->method('getListenersForEvent')
+            ->with($event)
+            ->willReturn($listeners);
 
-        $this->assertCount(0, $dispatcher->getEvents('NoneExistent'));
+        $dispatcher = new EventDispatcher($listener);
+        $this->expectExceptionObject($exception);
+        $dispatcher->dispatch($event);
+    }
+
+    public function testReturnEarlyIfPropagationIsStoppedBeforeDispatch(): void
+    {
+        $event = $this->createMock(StoppableEventInterface::class);
+        $event
+            ->expects($this->once())
+            ->method('isPropagationStopped')
+            ->willReturn(true);
+
+        $listener = $this->createMock(ListenerProviderInterface::class);
+        $listener
+            ->expects($this->never())
+            ->method('getListenersForEvent');
+
+        $dispatcher = new EventDispatcher($listener);
+        $this->assertSame($event, $dispatcher->dispatch($event));
+    }
+
+    public function testStopIfAnyListenersStopsPropagation()
+    {
+        $spy = (object) ['caught' => 0];
+        $event = new class ($spy) implements StoppableEventInterface {
+            private $spy;
+            public function __construct(object $spy)
+            {
+                $this->spy = $spy;
+            }
+            public function isPropagationStopped() : bool
+            {
+                return $this->spy->caught > 3;
+            }
+        };
+        $listeners = [];
+        for ($i = 0; $i < 5; $i += 1) {
+            $listeners[] = function (object $event) use ($spy) {
+                $spy->caught += 1;
+            };
+        }
+
+        $listener = $this->createMock(ListenerProviderInterface::class);
+        $listener
+            ->expects($this->once())
+            ->method('getListenersForEvent')
+            ->with($event)
+            ->willReturn($listeners);
+
+        $dispatcher = new EventDispatcher($listener);
+        $this->assertSame($event, $dispatcher->dispatch($event));
+        $this->assertSame(4, $spy->caught);
     }
 }

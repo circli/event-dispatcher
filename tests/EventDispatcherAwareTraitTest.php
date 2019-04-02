@@ -6,6 +6,7 @@ use Circli\EventDispatcher\EventDispatcher;
 use Circli\EventDispatcher\EventDispatcherAwareTrait;
 use Circli\EventDispatcher\NullEventDispatcher;
 use PHPUnit\Framework\TestCase;
+use Psr\EventDispatcher\ListenerProviderInterface;
 
 class EventDispatcherAwareTraitTest extends TestCase
 {
@@ -26,7 +27,7 @@ class EventDispatcherAwareTraitTest extends TestCase
     {
         $trait = $this->getMockForTrait(EventDispatcherAwareTrait::class);
 
-        $dispatcher = new EventDispatcher();
+        $dispatcher = new EventDispatcher($this->createMock(ListenerProviderInterface::class));
 
         $this->assertSame($trait, $trait->setEventDispatcher($dispatcher));
         $this->assertInstanceOf(EventDispatcher::class, $trait->getEventDispatcher());

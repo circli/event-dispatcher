@@ -4,18 +4,14 @@ namespace Tests;
 
 use Circli\EventDispatcher\NullEventDispatcher;
 use PHPUnit\Framework\TestCase;
+use Tests\Stubs\TestEvent;
 
 class NullEventDispatcherTest extends TestCase
 {
-    public function testListen(): void
+    public function testDispatch(): void
     {
         $eventDispatcher = new NullEventDispatcher();
-        $this->assertSame($eventDispatcher, $eventDispatcher->listen('test', function () {}));
-    }
-
-    public function testTrigger(): void
-    {
-        $eventDispatcher = new NullEventDispatcher();
-        $this->assertSame($eventDispatcher, $eventDispatcher->trigger('test'));
+        $event = new TestEvent();
+        $this->assertSame($event, $eventDispatcher->dispatch($event));
     }
 }
