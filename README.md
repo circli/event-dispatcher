@@ -55,14 +55,28 @@ use Circli\EventDispatcher\ListenerProvider\PriorityProvider;
 $provider = new PriorityProvider();
 
 //Add listener with lower than default priority
-$provider->listent(Event::class, $listener, 900);
+$provider->listen(Event::class, $listener, 900);
 
 //Add listener with higher than default priority
-$provider->listent(Event::class, $listener, 1100);
+$provider->listen(Event::class, $listener, 1100);
 
 //Add listener with normal priority
-$provider->listent(Event::class, $listener);
+$provider->listen(Event::class, $listener);
 ```
+
+### `ContainerListenerProvider`
+
+Use a Psr-11 container to lazy load the callbacks.
+This is cleaner why to do lazy loading then the `LazyListenerFactory`
+
+```php
+use Circli\EventDispatcher\ListenerProvider\ContainerListenerProvider;
+$container = new SomePsr11Container();
+
+$provider = new ContainerListenerProvider($container);
+$provider->addService(Event::class, EventListener::class);
+```
+
 
 ## `LazyListenerFactory`
 
