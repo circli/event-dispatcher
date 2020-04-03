@@ -39,12 +39,12 @@ $dispatcher->dispatch(new Event());
 
 The package includes a couple of providers for ease of use. You can also find some useful provider in [`fig/event-dispatcher-util`](https://github.com/php-fig/event-dispatcher-util)
 
-### `BasicProvider`
+### `DefaultProvider`
 
 ```php
-use Circli\EventDispatcher\ListenerProvider\BasicProvider;
-$provider = new PriorityProvider();
-$provider->listent(Event::class, $listener);
+use Circli\EventDispatcher\ListenerProvider\DefaultProvider;
+$provider = new DefaultProvider();
+$provider->listen(Event::class, $listener);
 ```
 
 ### `PriorityProvider`
@@ -91,5 +91,5 @@ $lazyFacytory = new LazyListenerFactory($psr11Container);
 
 $listener = $lazyFactory->lazy('SomeService');
 $provider = new DefaultProvider();
-$provider->listent(Event::class, $listener);
+$provider->listen(Event::class, $listener);
 ```
