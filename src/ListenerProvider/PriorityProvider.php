@@ -22,7 +22,7 @@ class PriorityProvider implements ListenerInterface
         $this->listeners[$priority][$eventType][] = $listener;
 
         $this->priorities = array_keys($this->listeners);
-        usort($this->priorities, function ($a, $b) {
+        usort($this->priorities, static function ($a, $b) {
             return $b <=> $a;
         });
     }
@@ -32,7 +32,9 @@ class PriorityProvider implements ListenerInterface
         foreach ($this->priorities as $priority) {
             foreach ($this->listeners[$priority] as $eventType => $listeners) {
                 if ($event instanceof $eventType) {
-                    yield from $listeners;
+                    foreach ($listeners as $listener) {
+                        yield $listener;
+                    }
                 }
             }
         }

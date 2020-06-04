@@ -25,8 +25,9 @@ class DefaultProvider implements ListenerInterface
             if (!$event instanceof $eventType) {
                 continue;
             }
-
-            yield from $listeners;
+            foreach ($listeners as $listener) {
+                yield$listener;
+            }
         }
     }
 }

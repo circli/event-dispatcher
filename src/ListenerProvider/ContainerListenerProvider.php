@@ -36,7 +36,9 @@ final class ContainerListenerProvider implements ListenerProviderInterface
                 continue;
             }
 
-            yield from $listeners;
+            foreach ($listeners as $listener) {
+                yield $listener;
+            }
         }
     }
 }
