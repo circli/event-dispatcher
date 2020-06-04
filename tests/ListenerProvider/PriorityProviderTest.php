@@ -4,6 +4,7 @@ namespace Tests\ListenerProvider;
 
 use Circli\EventDispatcher\ListenerProvider\DefaultProvider;
 use Circli\EventDispatcher\ListenerProvider\PriorityProvider;
+use Fig\EventDispatcher\AggregateProvider;
 use PHPUnit\Framework\TestCase;
 use Tests\Stubs\TestEvent;
 
@@ -50,5 +51,22 @@ class PriorityProviderTest extends TestCase
         $listener->listen(TestEvent::class, $callback);
 
         $this->assertCount(2, $listener->getListenersForEvent(new TestEvent()));
+    }
+
+    public function testWithAggregateProvider(): void
+    {
+        $aggregateProvider = new AggregateProvider();
+        $listener = new PriorityProvider();
+        $aggregateProvider->addProvider($listener);
+        $count = 0;
+        $listener->listen(TestEvent::class, function () use(&$count) {
+            $count++;
+        });
+
+        foreach ($aggregateProvider->getListenersForEvent(new TestEvent()) as $l) {
+            $l();
+        }
+
+        $this->assertSame(1, $count);
     }
 }

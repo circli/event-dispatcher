@@ -3,6 +3,7 @@
 namespace Tests\ListenerProvider;
 
 use Circli\EventDispatcher\ListenerProvider\DefaultProvider;
+use Fig\EventDispatcher\AggregateProvider;
 use PHPUnit\Framework\TestCase;
 use Tests\Stubs\TestEvent;
 
@@ -32,5 +33,22 @@ class DefaultProviderTest extends TestCase
         $listener = new DefaultProvider();
         $listener->listen('Dummy', function () {});
         $this->assertCount(0, $listener->getListenersForEvent(new TestEvent()));
+    }
+
+    public function testWithAggregateProvider(): void
+    {
+        $aggregateProvider = new AggregateProvider();
+        $listener = new DefaultProvider();
+        $aggregateProvider->addProvider($listener);
+        $count = 0;
+        $listener->listen(TestEvent::class, function () use(&$count) {
+            $count++;
+        });
+
+        foreach ($aggregateProvider->getListenersForEvent(new TestEvent()) as $l) {
+            $l();
+        }
+
+        $this->assertSame(1, $count);
     }
 }

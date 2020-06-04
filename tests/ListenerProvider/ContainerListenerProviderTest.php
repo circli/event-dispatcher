@@ -4,6 +4,7 @@ namespace Tests\ListenerProvider;
 
 use Circli\EventDispatcher\EventDispatcher;
 use Circli\EventDispatcher\ListenerProvider\ContainerListenerProvider;
+use Fig\EventDispatcher\AggregateProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -64,5 +65,20 @@ class ContainerListenerProviderTest extends TestCase
         $listener = new ContainerListenerProvider($this->getContainer());
         $listener->addService('Dummy', Test::class);
         $this->assertCount(0, $listener->getListenersForEvent(new TestEvent()));
+    }
+
+    public function testWithAggregateProvider(): void
+    {
+        $aggregateProvider = new AggregateProvider();
+        $listener = new ContainerListenerProvider($this->getContainer());
+        $aggregateProvider->addProvider($listener);
+
+        $listener->addService(TestEvent::class, TestServiceListener::class);
+        $count = 0;
+        foreach ($aggregateProvider->getListenersForEvent(new TestEvent()) as $l) {
+            $count++;
+        }
+
+        $this->assertSame(1, $count);
     }
 }
