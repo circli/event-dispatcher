@@ -24,7 +24,7 @@
   },
   "require-dev": {
     "fig/event-dispatcher-util": "^1.0",
-    "phpunit/phpunit": "^8"
+    "phpunit/phpunit": "^8.5"
   },
   "suggest": {
     "fig/event-dispatcher-util": "Needed to use PriorityAggregateProvider"

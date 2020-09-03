@@ -19,7 +19,6 @@ matrix:
     - php: 7.2
       env:
         - DEPS=locked
-        - TEST_COVERAGE=true
     - php: 7.2
       env:
         - DEPS=latest
@@ -38,18 +37,19 @@ matrix:
     - php: 7.4
       env:
         - DEPS=locked
+        - TEST_COVERAGE=true
     - php: 7.4
       env:
       - DEPS=latest
-    - php: nightly
-      env:
-        - DEPS=lowest
-    - php: nightly
-      env:
-        - DEPS=locked
-    - php: nightly
-      env:
-        - DEPS=latest
+#    - php: nightly
+#      env:
+#        - DEPS=lowest
+#    - php: nightly
+#      env:
+#        - DEPS=locked
+#    - php: nightly
+#      env:
+#        - DEPS=latest
 
 before_install:
   - if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
