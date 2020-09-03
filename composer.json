@@ -26,6 +26,9 @@
     "fig/event-dispatcher-util": "^1.0",
     "phpunit/phpunit": "^8"
   },
+  "suggest": {
+    "fig/event-dispatcher-util": "Needed to use PriorityAggregateProvider"
+  },
   "autoload": {
     "psr-4": {
       "Circli\\EventDispatcher\\": "src/"

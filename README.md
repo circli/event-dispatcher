@@ -77,6 +77,23 @@ $provider = new ContainerListenerProvider($container);
 $provider->addService(Event::class, EventListener::class);
 ```
 
+### `PriorityAggregateProviderTest`
+
+```php
+use Circli\EventDispatcher\ListenerProvider\PriorityAggregateProvider;
+use Circli\EventDispatcher\ListenerProvider\DefaultProvider;
+
+$aggregateProvider = new PriorityAggregateProvider();
+$aggregateProvider->addProvider(new DefaultProvider());
+
+// Add with higher than default priority
+$aggregateProvider->addProviderWithPriority(new DefaultProvider(), 1500);
+
+// Add with lower than default priority
+$aggregateProvider->addProviderWithPriority(new DefaultProvider(), 500);
+
+```
+
 
 ## `LazyListenerFactory`
 
@@ -87,7 +104,7 @@ use Circli\EventDispatcher\LazyListenerFactory;
 use Circli\EventDispatcher\ListenerProvider\DefaultProvider;
 use Psr\Container\ContainerInterface;
 
-$lazyFacytory = new LazyListenerFactory($psr11Container);
+$lazyFactory = new LazyListenerFactory($psr11Container);
 
 $listener = $lazyFactory->lazy('SomeService');
 $provider = new DefaultProvider();
