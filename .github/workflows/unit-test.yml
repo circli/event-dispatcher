@@ -62,8 +62,8 @@ jobs:
             -   name: "Install PHP"
                 uses: "shivammathur/setup-php@v2"
                 with:
-                    coverage: "xdebug"
-                    php-version: "php7.4"
+                    php-version: '7.4'
+                    coverage: xdebug
 
             - name: "Checkout"
               uses: "actions/checkout@v2"
