@@ -3,9 +3,7 @@
 namespace Tests;
 
 use Circli\EventDispatcher\EventDispatcher;
-use http\Exception\RuntimeException;
 use PHPUnit\Framework\TestCase;
-use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 use Tests\Stubs\TestEvent;

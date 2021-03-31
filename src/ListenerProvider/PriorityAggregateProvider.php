@@ -7,6 +7,7 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 
 final class PriorityAggregateProvider extends AggregateProvider
 {
+    /** @var string[] */
     private $priorities = [];
 
     public function addProvider(ListenerProviderInterface $provider): AggregateProvider
@@ -35,6 +36,9 @@ final class PriorityAggregateProvider extends AggregateProvider
         return $this;
     }
 
+    /**
+     * @return iterable<callable>
+     */
     public function getListenersForEvent(object $event): iterable
     {
         foreach ($this->priorities as $priority) {

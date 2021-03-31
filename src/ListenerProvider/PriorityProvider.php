@@ -4,7 +4,9 @@ namespace Circli\EventDispatcher\ListenerProvider;
 
 class PriorityProvider implements ListenerInterface
 {
+    /** @var array<string, array<string, array<array-key, callable>>> */
     private $listeners = [];
+    /** @var string[] */
     private $priorities = [];
 
     public function listen(string $eventType, callable $listener, int $priority = 1000): void
@@ -27,6 +29,9 @@ class PriorityProvider implements ListenerInterface
         });
     }
 
+    /**
+     * @return iterable<callable>
+     */
     public function getListenersForEvent(object $event): iterable
     {
         foreach ($this->priorities as $priority) {

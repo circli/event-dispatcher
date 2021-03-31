@@ -17,6 +17,9 @@ final class ContainerListenerProvider implements ListenerProviderInterface
         $this->container = $container;
     }
 
+    /**
+     * @param class-string $service
+     */
     public function addService(string $eventType, string $service): void
     {
         if (!isset($this->listeners[$eventType])) {
@@ -29,6 +32,9 @@ final class ContainerListenerProvider implements ListenerProviderInterface
         };
     }
 
+    /**
+     * @return iterable<callable>
+     */
     public function getListenersForEvent(object $event): iterable
     {
         foreach ($this->listeners as $eventType => $listeners) {
