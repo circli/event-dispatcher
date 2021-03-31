@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/circli/event-dispatcher.svg)](https://packagist.org/packages/circli/event-dispatcher)
 [![Software License](https://img.shields.io/github/license/circli/event-dispatcher.svg)](LICENSE.md)
-[![Build Status](https://travis-ci.org/circli/event-dispatcher.svg?branch=2.x)](https://secure.travis-ci.org/circli/event-dispatcher)
+[![Build Status](https://github.com/circli/event-dispatcher/actions/workflows/unit-test.yml/badge.svg)](https://github.com/circli/event-dispatcher/actions/workflows/unit-test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/circli/event-dispatcher/badge.svg?branch=2.x)](https://coveralls.io/github/circli/event-dispatcher?branch=2.x)
 
 The package provides a standard event dispatcher, as well as one null dispatcher that can be used as default dispatcher in the `EventDispatcherAwareInterface`
