@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Circli\EventDispatcher;
 
@@ -27,15 +27,14 @@ final class EventDispatcher implements EventDispatcherInterface
      */
     public function dispatch(object $event)
     {
-        $stoppable = $event instanceof StoppableEventInterface;
-        if ($stoppable && $event->isPropagationStopped()) {
+        if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
             return $event;
         }
 
         foreach ($this->provider->getListenersForEvent($event) as $listener) {
             $listener($event);
 
-            if ($stoppable && $event->isPropagationStopped()) {
+            if ($event instanceof StoppableEventInterface && $event->isPropagationStopped()) {
                 break;
             }
         }

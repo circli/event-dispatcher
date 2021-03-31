@@ -4,6 +4,7 @@ namespace Circli\EventDispatcher\ListenerProvider;
 
 class DefaultProvider implements ListenerInterface
 {
+    /** @var array<string, array<array-key, callable>> */
     private $listeners = [];
 
     public function listen(string $eventType, callable $listener): void
@@ -19,6 +20,9 @@ class DefaultProvider implements ListenerInterface
         $this->listeners[$eventType][] = $listener;
     }
 
+    /**
+     * @return iterable<callable>
+     */
     public function getListenersForEvent(object $event): iterable
     {
         foreach ($this->listeners as $eventType => $listeners) {

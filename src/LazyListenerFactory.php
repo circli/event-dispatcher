@@ -14,6 +14,9 @@ class LazyListenerFactory
         $this->container = $container;
     }
 
+    /**
+     * @param class-string $listener
+     */
     public function lazy($listener): callable
     {
         return function ($event) use ($listener) {
