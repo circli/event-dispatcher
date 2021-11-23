@@ -4,13 +4,14 @@ namespace Circli\EventDispatcher\ListenerProvider;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
 
-final class FilterableProvider implements ListenerProviderInterface
+final class FilterableProvider implements ListenerInterface
 {
     /** @var array<string, array<array-key, array{callable, callable}>> */
     private $listeners = [];
 
-    public function listen(string $eventType, callable $listener, callable $filter): void
+    public function listen(string $eventType, callable $listener, callable $filter = null): void
     {
+        $filter = $filter ?? static function () {return true;};
         if (!isset($this->listeners[$eventType])) {
             $this->listeners[$eventType] = [];
         }

@@ -30,6 +30,7 @@ final class FilterableProviderTest extends TestCase
         });
         $this->assertCount(0, $listener->getListenersForEvent(new TestFilterEvent(2)));
     }
+
     public function testNoListenerFound(): void
     {
         $listener = new FilterableProvider();
@@ -38,6 +39,7 @@ final class FilterableProviderTest extends TestCase
         });
         $this->assertCount(0, $listener->getListenersForEvent(new TestFilterEvent(2)));
     }
+
     public function testAddDuplicateCallback(): void
     {
         $listener = new FilterableProvider();
@@ -47,5 +49,16 @@ final class FilterableProviderTest extends TestCase
         $listener->listen(TestEvent::class, $callback, $filter);
 
         $this->assertCount(1, $listener->getListenersForEvent(new TestEvent()));
+    }
+
+    public function testDefaultFilter(): void
+    {
+        $listener = new FilterableProvider();
+        $listener->listen(TestFilterEvent::class, function () {}, function (TestFilterEvent $e) {
+            return $e->getFilterValue() === 2;
+        });
+        $listener->listen(TestFilterEvent::class, function () {});
+
+        $this->assertCount(2, $listener->getListenersForEvent(new TestFilterEvent(2)));
     }
 }

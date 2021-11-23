@@ -77,7 +77,7 @@ $provider = new ContainerListenerProvider($container);
 $provider->addService(Event::class, EventListener::class);
 ```
 
-### `PriorityAggregateProviderTest`
+### `PriorityAggregateProvider`
 
 ```php
 use Circli\EventDispatcher\ListenerProvider\PriorityAggregateProvider;
@@ -92,6 +92,18 @@ $aggregateProvider->addProviderWithPriority(new DefaultProvider(), 1500);
 // Add with lower than default priority
 $aggregateProvider->addProviderWithPriority(new DefaultProvider(), 500);
 
+```
+
+### `FilterableProvider`
+
+```php
+use Circli\EventDispatcher\ListenerProvider\FilterableProvider;
+
+$provider = new FilterableProvider();
+
+$provider->listen(RandomEvent::class, $listener, function ($event) {
+    return ifRandomExternalThingIsTrue();
+});
 ```
 
 
