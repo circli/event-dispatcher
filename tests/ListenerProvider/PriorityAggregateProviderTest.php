@@ -53,4 +53,34 @@ final class PriorityAggregateProviderTest extends TestCase
 
         $this->assertSame(1, $count);
     }
+
+    public function testMerge(): void
+    {
+        $aggregateProvider = new PriorityAggregateProvider();
+        $aggregateProvider->addProviderWithPriority($this->getListener(1), 1100);
+        $aggregateProvider->addProviderWithPriority($this->getListener(2), 900);
+
+        $aggregateProvider2 = new PriorityAggregateProvider();
+        $aggregateProvider2->addProviderWithPriority($this->getListener(3), 900);
+        $aggregateProvider2->addProviderWithPriority($this->getListener(0), 1150);
+        $aggregateProvider2->addProviderWithPriority($this->getListener(4), 850);
+
+        $mergedProvider = $aggregateProvider->merge($aggregateProvider2);
+
+        foreach ($mergedProvider->getListenersForEvent(new TestEvent()) as $l) {
+            $l();
+        }
+    }
+
+    private function getListener(int $expectedExecuteOrder): DefaultProvider
+    {
+        $listener1 = new DefaultProvider();
+        static $count = 0;
+        $listener1->listen(TestEvent::class, function () use (&$count, $expectedExecuteOrder) {
+            self::assertSame($expectedExecuteOrder, $count);
+            $count++;
+        });
+
+        return $listener1;
+    }
 }

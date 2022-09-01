@@ -36,6 +36,28 @@ final class PriorityAggregateProvider extends AggregateProvider
         return $this;
     }
 
+    public function merge(PriorityAggregateProvider $provider): self
+    {
+        foreach ($provider->providers as $priority => $providers) {
+            if (!isset($this->providers[$priority])) {
+                $this->providers[$priority] = $providers;
+            }
+            else {
+                foreach ($providers as $p) {
+                    if (\in_array($p, $this->providers[$priority], true)) {
+                        continue;
+                    }
+                    $this->providers[$priority][] = $p;
+                }
+            }
+        }
+        $this->priorities = array_keys($this->providers);
+        usort($this->priorities, static function ($a, $b) {
+            return $b <=> $a;
+        });
+        return $this;
+    }
+
     /**
      * @return iterable<callable>
      */
