@@ -16,14 +16,13 @@ jobs:
             fail-fast: false
             matrix:
                 php-version:
-                    - "7.2"
-                    - "7.3"
                     - "7.4"
                     - "8.0"
+                    - "8.1"
                 experimental:
                     - false
                 include:
-                    - php-version: "8.1"
+                    - php-version: "8.2"
                       composer-options: "--ignore-platform-reqs"
                       experimental: true
 

@@ -16,7 +16,7 @@ class ContainerListenerProviderTest extends TestCase
     private function getContainer(): ContainerInterface
     {
         return new class implements ContainerInterface {
-            public function get($id)
+            public function get(string $id)
             {
                 if ($id === TestServiceListener::class) {
                     return new TestServiceListener();
@@ -24,7 +24,7 @@ class ContainerListenerProviderTest extends TestCase
                 return new class extends \RuntimeException implements NotFoundExceptionInterface {};
             }
 
-            public function has($id)
+            public function has(string $id): bool
             {
                 return true;
             }
