@@ -48,7 +48,7 @@ class ContainerListenerProviderTest extends TestCase
         $listener = new ContainerListenerProvider($this->getContainer());
         $listener->addService(TestEvent::class, TestServiceListener::class);
 
-        $this->assertCount(1, $listener->getListenersForEvent(new TestEvent()));
+        $this->assertCount(1, iterator_to_array($listener->getListenersForEvent(new TestEvent())));
     }
 
     public function testAddDuplicateCallback(): void
@@ -57,14 +57,14 @@ class ContainerListenerProviderTest extends TestCase
         $listener->addService(TestEvent::class, TestServiceListener::class);
         $listener->addService(TestEvent::class, TestServiceListener::class);
 
-        $this->assertCount(2, $listener->getListenersForEvent(new TestEvent()));
+        $this->assertCount(2, iterator_to_array($listener->getListenersForEvent(new TestEvent())));
     }
 
     public function testNoListenersFound(): void
     {
         $listener = new ContainerListenerProvider($this->getContainer());
         $listener->addService('Dummy', Test::class);
-        $this->assertCount(0, $listener->getListenersForEvent(new TestEvent()));
+        $this->assertCount(0, iterator_to_array($listener->getListenersForEvent(new TestEvent())));
     }
 
     public function testWithAggregateProvider(): void

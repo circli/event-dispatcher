@@ -15,7 +15,7 @@ class DefaultProviderTest extends TestCase
         $listener->listen(TestEvent::class, function() {});
         $listener->listen(TestEvent::class, function() {});
 
-        $this->assertCount(2, $listener->getListenersForEvent(new TestEvent()));
+        $this->assertCount(2, iterator_to_array($listener->getListenersForEvent(new TestEvent())));
     }
 
     public function testAddDuplicateCallback(): void
@@ -25,14 +25,14 @@ class DefaultProviderTest extends TestCase
         $listener->listen(TestEvent::class, $callback);
         $listener->listen(TestEvent::class, $callback);
 
-        $this->assertCount(1, $listener->getListenersForEvent(new TestEvent()));
+        $this->assertCount(1, iterator_to_array($listener->getListenersForEvent(new TestEvent())));
     }
 
     public function testNoListenersFound(): void
     {
         $listener = new DefaultProvider();
         $listener->listen('Dummy', function () {});
-        $this->assertCount(0, $listener->getListenersForEvent(new TestEvent()));
+        $this->assertCount(0, iterator_to_array($listener->getListenersForEvent(new TestEvent())));
     }
 
     public function testWithAggregateProvider(): void
@@ -45,6 +45,7 @@ class DefaultProviderTest extends TestCase
             $count++;
         });
 
+        /** @var callable $l */
         foreach ($aggregateProvider->getListenersForEvent(new TestEvent()) as $l) {
             $l();
         }

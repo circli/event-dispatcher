@@ -5,9 +5,9 @@ namespace Circli\EventDispatcher\ListenerProvider;
 class PriorityProvider implements ListenerInterface
 {
     /** @var array<string, array<string, array<array-key, callable>>> */
-    private $listeners = [];
+    private array $listeners = [];
     /** @var string[] */
-    private $priorities = [];
+    private array $priorities = [];
 
     public function listen(string $eventType, callable $listener, int $priority = 1000): void
     {

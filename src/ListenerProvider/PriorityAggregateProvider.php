@@ -8,7 +8,7 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 final class PriorityAggregateProvider extends AggregateProvider
 {
     /** @var string[] */
-    private $priorities = [];
+    private array $priorities = [];
 
     public function addProvider(ListenerProviderInterface $provider): AggregateProvider
     {

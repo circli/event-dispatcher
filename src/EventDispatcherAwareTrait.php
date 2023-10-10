@@ -6,10 +6,9 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 trait EventDispatcherAwareTrait
 {
-    /** @var EventDispatcherInterface */
-    private $eventDispatcher;
+    private EventDispatcherInterface $eventDispatcher;
 
-    public function setEventDispatcher(EventDispatcherInterface $eventManager)
+    public function setEventDispatcher(EventDispatcherInterface $eventManager): static
     {
         $this->eventDispatcher = $eventManager;
         return $this;
@@ -17,7 +16,7 @@ trait EventDispatcherAwareTrait
 
     public function getEventDispatcher(): EventDispatcherInterface
     {
-        if ($this->eventDispatcher === null) {
+        if (!isset($this->eventDispatcher)) {
             $this->eventDispatcher = new NullEventDispatcher();
         }
         return $this->eventDispatcher;

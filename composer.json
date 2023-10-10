@@ -18,14 +18,14 @@
     "psr/event-dispatcher-implementation": "^1.0"
   },
   "require": {
-    "php": ">=7.2",
+    "php": "^8.0",
     "psr/event-dispatcher": "^1.0",
     "psr/container": "^1.0 || ^2.0"
   },
   "require-dev": {
     "fig/event-dispatcher-util": "^1.0",
-    "phpunit/phpunit": "^8.5 || ^9.0",
-    "phpstan/phpstan": "^0.12.82"
+    "phpunit/phpunit": "^9.0 || ^10.0",
+    "phpstan/phpstan": "^1.0"
   },
   "suggest": {
     "fig/event-dispatcher-util": "Needed to use PriorityAggregateProvider"

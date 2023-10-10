@@ -20,7 +20,7 @@ class PriorityProviderTest extends TestCase
         $listener->listen(TestEvent::class, $highPriorityCallback, 1100);
         $listener->listen(TestEvent::class, $normalPriorityCallback);
 
-        $this->assertCount(3, $listener->getListenersForEvent(new TestEvent()));
+        $this->assertCount(3, iterator_to_array($listener->getListenersForEvent(new TestEvent())));
 
         $listeners = [];
         foreach ($listener->getListenersForEvent(new TestEvent()) as $tmp) {
@@ -39,7 +39,7 @@ class PriorityProviderTest extends TestCase
         $listener->listen(TestEvent::class, $callback);
         $listener->listen(TestEvent::class, $callback);
 
-        $this->assertCount(1, $listener->getListenersForEvent(new TestEvent()));
+        $this->assertCount(1, iterator_to_array($listener->getListenersForEvent(new TestEvent())));
     }
 
     public function testAddDuplicateDifferentPrioritiesCallback(): void
@@ -50,7 +50,7 @@ class PriorityProviderTest extends TestCase
         $listener->listen(TestEvent::class, $callback, 1);
         $listener->listen(TestEvent::class, $callback);
 
-        $this->assertCount(2, $listener->getListenersForEvent(new TestEvent()));
+        $this->assertCount(2, iterator_to_array($listener->getListenersForEvent(new TestEvent())));
     }
 
     public function testWithAggregateProvider(): void
@@ -63,6 +63,7 @@ class PriorityProviderTest extends TestCase
             $count++;
         });
 
+        /** @var callable $l */
         foreach ($aggregateProvider->getListenersForEvent(new TestEvent()) as $l) {
             $l();
         }

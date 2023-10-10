@@ -6,18 +6,14 @@ use Psr\Container\ContainerInterface;
 
 class LazyListenerFactory
 {
-    /** @var ContainerInterface */
-    private $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
+    public function __construct(
+        private ContainerInterface $container,
+    ) {}
 
     /**
      * @param class-string $listener
      */
-    public function lazy($listener): callable
+    public function lazy(string $listener): callable
     {
         return function ($event) use ($listener) {
             $callback = $this->container->get($listener);

@@ -4,7 +4,7 @@ namespace Tests\ListenerProvider;
 
 use Circli\EventDispatcher\ListenerProvider\DefaultProvider;
 use Circli\EventDispatcher\ListenerProvider\ToggleProvider;
-use PHPStan\Testing\TestCase;
+use PHPUnit\Framework\TestCase;
 use Tests\Stubs\TestEvent;
 
 final class ToggleProviderTest extends TestCase
@@ -22,7 +22,7 @@ final class ToggleProviderTest extends TestCase
     public function testActiveToggle(): void
     {
         $toggleProvider = new ToggleProvider($this->defaultProvider);
-        $this->assertCount(2, $toggleProvider->getListenersForEvent(new TestEvent()));
+        $this->assertCount(2, iterator_to_array($toggleProvider->getListenersForEvent(new TestEvent())));
     }
 
     public function testDisabledToggle(): void
@@ -30,15 +30,15 @@ final class ToggleProviderTest extends TestCase
         $toggleProvider = new ToggleProvider($this->defaultProvider);
         $toggleProvider->disable();
 
-        $this->assertCount(0, $toggleProvider->getListenersForEvent(new TestEvent()));
+        $this->assertCount(0, iterator_to_array($toggleProvider->getListenersForEvent(new TestEvent())));
     }
 
     public function testReEnabledToggle(): void
     {
         $toggleProvider = new ToggleProvider($this->defaultProvider);
         $toggleProvider->disable();
-        $this->assertCount(0, $toggleProvider->getListenersForEvent(new TestEvent()));
+        $this->assertCount(0, iterator_to_array($toggleProvider->getListenersForEvent(new TestEvent())));
         $toggleProvider->enable();
-        $this->assertCount(2, $toggleProvider->getListenersForEvent(new TestEvent()));
+        $this->assertCount(2, iterator_to_array($toggleProvider->getListenersForEvent(new TestEvent())));
     }
 }

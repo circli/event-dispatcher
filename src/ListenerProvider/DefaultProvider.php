@@ -5,7 +5,7 @@ namespace Circli\EventDispatcher\ListenerProvider;
 class DefaultProvider implements ListenerInterface
 {
     /** @var array<string, array<array-key, callable>> */
-    private $listeners = [];
+    private array $listeners = [];
 
     public function listen(string $eventType, callable $listener): void
     {

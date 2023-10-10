@@ -19,7 +19,7 @@ final class FilterableProviderTest extends TestCase
             return $e->getFilterValue() === 3;
         });
 
-        $this->assertCount(1, $listener->getListenersForEvent(new TestFilterEvent(2)));
+        $this->assertCount(1, iterator_to_array($listener->getListenersForEvent(new TestFilterEvent(2))));
     }
 
     public function testAllFilterReturnFalse(): void
@@ -28,7 +28,7 @@ final class FilterableProviderTest extends TestCase
         $listener->listen(TestFilterEvent::class, function () {}, function (TestFilterEvent $e) {
             return false;
         });
-        $this->assertCount(0, $listener->getListenersForEvent(new TestFilterEvent(2)));
+        $this->assertCount(0, iterator_to_array($listener->getListenersForEvent(new TestFilterEvent(2))));
     }
 
     public function testNoListenerFound(): void
@@ -37,7 +37,7 @@ final class FilterableProviderTest extends TestCase
         $listener->listen(TestEvent::class, function () {}, function (TestEvent $e) {
             return false;
         });
-        $this->assertCount(0, $listener->getListenersForEvent(new TestFilterEvent(2)));
+        $this->assertCount(0, iterator_to_array($listener->getListenersForEvent(new TestFilterEvent(2))));
     }
 
     public function testAddDuplicateCallback(): void
@@ -48,7 +48,7 @@ final class FilterableProviderTest extends TestCase
         $listener->listen(TestEvent::class, $callback, $filter);
         $listener->listen(TestEvent::class, $callback, $filter);
 
-        $this->assertCount(1, $listener->getListenersForEvent(new TestEvent()));
+        $this->assertCount(1, iterator_to_array($listener->getListenersForEvent(new TestEvent())));
     }
 
     public function testDefaultFilter(): void
@@ -59,6 +59,6 @@ final class FilterableProviderTest extends TestCase
         });
         $listener->listen(TestFilterEvent::class, function () {});
 
-        $this->assertCount(2, $listener->getListenersForEvent(new TestFilterEvent(2)));
+        $this->assertCount(2, iterator_to_array($listener->getListenersForEvent(new TestFilterEvent(2))));
     }
 }

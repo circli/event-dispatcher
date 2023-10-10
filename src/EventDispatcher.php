@@ -8,13 +8,9 @@ use Psr\EventDispatcher\StoppableEventInterface;
 
 final class EventDispatcher implements EventDispatcherInterface
 {
-    /** @var ListenerProviderInterface */
-    private $provider;
-
-    public function __construct(ListenerProviderInterface $provider)
-    {
-        $this->provider = $provider;
-    }
+    public function __construct(
+        private ListenerProviderInterface $provider,
+    ) {}
 
     /**
      * Provide all relevant listeners with an event to process.

@@ -6,15 +6,11 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 
 final class ToggleProvider implements ListenerProviderInterface
 {
-    /** @var ListenerProviderInterface */
-    private $provider;
-    /** @var bool */
-    private $active = true;
+    private bool $active = true;
 
-    public function __construct(ListenerProviderInterface $provider)
-    {
-        $this->provider = $provider;
-    }
+    public function __construct(
+        private ListenerProviderInterface $provider,
+    ) {}
 
     public function disable(): void
     {

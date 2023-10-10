@@ -8,14 +8,11 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 final class ContainerListenerProvider implements ListenerProviderInterface
 {
     /** @var array<string, array<int, callable>> */
-    private $listeners = [];
-    /** @var ContainerInterface */
-    private $container;
+    private array $listeners = [];
 
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
+    public function __construct(
+        private ContainerInterface $container,
+    ) {}
 
     /**
      * @param class-string $service
