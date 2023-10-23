@@ -1,45 +1,45 @@
 {
-  "name": "circli/event-dispatcher",
-  "description": "PSR-14 event dispatcher implementation.",
-  "keywords": [
-    "Circli",
-    "PSR-14",
-    "Events"
-  ],
-  "type": "library",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Andreas Sundqvist",
-      "email": "andreas@oak-valley.se"
-    }
-  ],
-  "provide": {
-    "psr/event-dispatcher-implementation": "^1.0"
-  },
-  "require": {
-    "php": "^8.0",
-    "psr/event-dispatcher": "^1.0",
-    "psr/container": "^1.0 || ^2.0",
-    "fig/event-dispatcher-util": "^1.0"
-  },
-  "require-dev": {
-    "psr/log": "^1.0 || ^2.0 || ^3.0",
-    "phpunit/phpunit": "^9.0 || ^10.0",
-    "phpstan/phpstan": "^1.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "Circli\\EventDispatcher\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\": "tests/"
-    }
-  },
-  "scripts": {
-    "test": "phpunit --colors=always",
-    "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
-  }
+	"name": "circli/event-dispatcher",
+	"description": "PSR-14 event dispatcher implementation.",
+	"keywords": [
+		"Circli",
+		"PSR-14",
+		"Events"
+	],
+	"type": "library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Andreas Sundqvist",
+			"email": "andreas@oak-valley.se"
+		}
+	],
+	"provide": {
+		"psr/event-dispatcher-implementation": "^1.0"
+	},
+	"require": {
+		"php": "^8.0",
+		"psr/event-dispatcher": "^1.0",
+		"psr/container": "^1.0 || ^2.0",
+		"fig/event-dispatcher-util": "^1.0"
+	},
+	"require-dev": {
+		"psr/log": "^1.0 || ^2.0 || ^3.0",
+		"phpunit/phpunit": "^9.0 || ^10.0",
+		"phpstan/phpstan": "^1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Circli\\EventDispatcher\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests/"
+		}
+	},
+	"scripts": {
+		"test": "phpunit --colors=always",
+		"test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+	}
 }
