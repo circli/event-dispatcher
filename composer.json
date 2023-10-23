@@ -20,16 +20,13 @@
   "require": {
     "php": "^8.0",
     "psr/event-dispatcher": "^1.0",
-    "psr/container": "^1.0 || ^2.0"
+    "psr/container": "^1.0 || ^2.0",
+    "fig/event-dispatcher-util": "^1.0"
   },
   "require-dev": {
     "psr/log": "^1.0 || ^2.0 || ^3.0",
-    "fig/event-dispatcher-util": "^1.0",
     "phpunit/phpunit": "^9.0 || ^10.0",
     "phpstan/phpstan": "^1.0"
-  },
-  "suggest": {
-    "fig/event-dispatcher-util": "Needed to use PriorityAggregateProvider"
   },
   "autoload": {
     "psr-4": {
