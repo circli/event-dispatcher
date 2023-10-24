@@ -4,6 +4,9 @@ namespace Circli\EventDispatcher;
 
 use Psr\Container\ContainerInterface;
 
+/**
+ * @deprecated
+ */
 class LazyListenerFactory
 {
     /** @var ContainerInterface */
