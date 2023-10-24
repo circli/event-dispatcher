@@ -4,18 +4,17 @@ namespace Tests\Stubs;
 
 class TestFilterEvent
 {
-    private $count = 0;
-    /** @var bool */
-    private $done = false;
-    private $filterValue;
+    private int $count = 0;
+    private bool $done = false;
+    private mixed $filterValue;
 
-    public function __construct($filterValue)
+    public function __construct(mixed $filterValue)
     {
         $this->count++;
         $this->filterValue = $filterValue;
     }
 
-    public function getFilterValue()
+    public function getFilterValue(): mixed
     {
         return $this->filterValue;
     }

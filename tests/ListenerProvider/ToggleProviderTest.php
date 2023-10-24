@@ -9,8 +9,7 @@ use Tests\Stubs\TestEvent;
 
 final class ToggleProviderTest extends TestCase
 {
-    /** @var DefaultProvider */
-    private $defaultProvider;
+    private DefaultProvider $defaultProvider;
 
     protected function setUp(): void
     {

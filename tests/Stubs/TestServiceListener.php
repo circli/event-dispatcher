@@ -4,7 +4,7 @@ namespace Tests\Stubs;
 
 final class TestServiceListener
 {
-    public function __invoke(TestEvent $event)
+    public function __invoke(TestEvent $event): void
     {
         $event->markAsExecuted();
     }

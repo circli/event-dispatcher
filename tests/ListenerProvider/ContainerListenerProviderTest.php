@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Tests\ListenerProvider;
 
@@ -13,25 +13,7 @@ use Tests\Stubs\TestServiceListener;
 
 class ContainerListenerProviderTest extends TestCase
 {
-    private function getContainer(): ContainerInterface
-    {
-        return new class implements ContainerInterface {
-            public function get(string $id)
-            {
-                if ($id === TestServiceListener::class) {
-                    return new TestServiceListener();
-                }
-                return new class extends \RuntimeException implements NotFoundExceptionInterface {};
-            }
-
-            public function has(string $id): bool
-            {
-                return true;
-            }
-        };
-    }
-
-    public function testLazyLoad()
+    public function testLazyLoad(): void
     {
         $listener = new ContainerListenerProvider($this->getContainer());
         $listener->addService(TestEvent::class, TestServiceListener::class);
@@ -80,5 +62,23 @@ class ContainerListenerProviderTest extends TestCase
         }
 
         $this->assertSame(1, $count);
+    }
+
+    private function getContainer(): ContainerInterface
+    {
+        return new class implements ContainerInterface {
+            public function get(string $id)
+            {
+                if ($id === TestServiceListener::class) {
+                    return new TestServiceListener();
+                }
+                return new class extends \RuntimeException implements NotFoundExceptionInterface {};
+            }
+
+            public function has(string $id): bool
+            {
+                return true;
+            }
+        };
     }
 }

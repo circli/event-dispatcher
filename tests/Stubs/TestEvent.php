@@ -4,9 +4,8 @@ namespace Tests\Stubs;
 
 class TestEvent
 {
-    private $count = 0;
-    /** @var bool */
-    private $done = false;
+    private int $count = 0;
+    private bool $done = false;
 
     public function __construct()
     {
