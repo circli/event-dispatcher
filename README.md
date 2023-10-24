@@ -67,7 +67,6 @@ $provider->listen(Event::class, $listener);
 ### `ContainerListenerProvider`
 
 Use a Psr-11 container to lazy load the callbacks.
-This is cleaner why to do lazy loading then the `LazyListenerFactory`
 
 ```php
 use Circli\EventDispatcher\ListenerProvider\ContainerListenerProvider;
@@ -104,21 +103,4 @@ $provider = new FilterableProvider();
 $provider->listen(RandomEvent::class, $listener, function ($event) {
     return ifRandomExternalThingIsTrue();
 });
-```
-
-
-## `LazyListenerFactory`
-
-We also include a factory class to create lazy loaded handlers.
-
-```php
-use Circli\EventDispatcher\LazyListenerFactory;
-use Circli\EventDispatcher\ListenerProvider\DefaultProvider;
-use Psr\Container\ContainerInterface;
-
-$lazyFactory = new LazyListenerFactory($psr11Container);
-
-$listener = $lazyFactory->lazy('SomeService');
-$provider = new DefaultProvider();
-$provider->listen(Event::class, $listener);
 ```
