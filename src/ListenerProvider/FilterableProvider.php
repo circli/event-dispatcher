@@ -7,7 +7,7 @@ final class FilterableProvider implements ListenerInterface
     /** @var array<string, array<array-key, array{callable, callable}>> */
     private array $listeners = [];
 
-    public function listen(string $eventType, callable $listener, callable $filter = null): void
+    public function listen(string $eventType, callable $listener, null|callable $filter = null): void
     {
         $filter = $filter ?? static function () {return true;};
         if (!isset($this->listeners[$eventType])) {
